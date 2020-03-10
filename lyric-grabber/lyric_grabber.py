@@ -13,7 +13,7 @@ headers = {'User-Agent': agent}
 if(os.path.exists("output.csv")):
     os.remove("output.csv")
 
-df = pd.read_csv("../SpotifyAPI/ArtistAndSongs.csv")
+df = pd.read_csv("file.csv")
 
 def lyrics(artist, title):
     base = "https://azlyrics.com/"
@@ -39,7 +39,7 @@ def applyGrabLyrics(df):
     lyrics = df.apply(grabLyrics,axis=1)
     return lyrics
 
-n_proc = mp.cpu_count()
+n_proc = 4
 p = mp.Pool(n_proc)
 split_dfs = np.array_split(df, n_proc)
 pool_res = p.map(applyGrabLyrics, split_dfs)
