@@ -25,7 +25,7 @@ public class SpotifyAPI {
       final ClientCredentials clientCredentials = clientCredentialsRequest.execute();
 
       // Set access token for further "spotifyApi" object usage
-      spotifyApi.setAccessToken(clientCredentials.getAccessToken());
+      //spotifyApi.setAccessToken(clientCredentials.getAccessToken());
       //System.out.println(clientCredentials.getAccessToken());
       //System.out.println("Expires in: " + clientCredentials.getExpiresIn());
       return clientCredentials.getAccessToken();
