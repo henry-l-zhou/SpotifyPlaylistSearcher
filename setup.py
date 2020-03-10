@@ -8,6 +8,7 @@ setup(
     long_description=open('README.md').read(),
     install_requires=[
         "requests==2.7.0",
+        "azapi>=2.1.0",
         ],
     dependency_links = [
      "git+git://github.com/elmoiv/azapi",
