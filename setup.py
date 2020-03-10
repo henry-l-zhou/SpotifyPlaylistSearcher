@@ -1,17 +1,12 @@
-from setuptools import setup, find_packages
+import setuptools
 
-setup(
-    name='lyric-grabber',
-    packages=find_packages(),
-    url='https://github.com/henry-l-zhou/SpotifyPlaylistSearcher/lyric-grabber',
-    description='Grabs lyrics from a list of songs',
-    long_description=open('README.md').read(),
-    install_requires=[
-        "requests==2.20.0",
-        "azapi>=2.1.0",
-        ],
-    dependency_links = [
-     "git+git://github.com/elmoiv/azapi",
-    ],
-    include_package_data=True,
-)
+setuptools.setup(
+    name = 'SpotifyPlaylistSearcher',
+    packages = ['lyric-grabber'],
+    version = '1.0.0',
+    description = 'An API wrapper for azlyrics which allows you to programatically extract data',
+    author = 'Brian Hu',
+    author_email = 'bhurobin221@gmail.com',
+    url = 'https://github.com/henry-l-zhou/SpotifyPlaylistSearcher',
+    install_requires=['azlyrics'],
+    )
