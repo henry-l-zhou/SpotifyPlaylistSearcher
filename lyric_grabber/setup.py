@@ -7,7 +7,7 @@ setup(
     description='Grabs lyrics from a list of songs',
     long_description=open('README.md').read(),
     install_requires=[
-        "requests==2.7.0",
+        "requests==2.20.0",
         ],
     dependency_links = [
      "git+git://github.com/elmoiv/azapi",
