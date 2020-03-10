@@ -5,6 +5,7 @@ import re
 from bs4 import BeautifulSoup
 import multiprocessing as mp
 import numpy as np
+import time
 
 agent = 'Mozilla/5.0 (Windows NT 6.0; WOW64; rv:24.0) \
         Gecko/20100101 Firefox/24.0'
@@ -16,6 +17,7 @@ if(os.path.exists("output.csv")):
 df = pd.read_csv("file.csv")
 
 def lyrics(artist, title):
+    time.sleep(1)
     base = "https://azlyrics.com/"
     artistURI = re.sub('[\W_]+', '', artist.lower())
     titleURI = title.split('-', 1)[0].split('(', 1)[0]
@@ -29,10 +31,11 @@ def lyrics(artist, title):
         return "Unable to find " + title + " by " + artist
     else:
         l = [x.getText() for x in l]
+        l = re.sub("\\n", " ", l)
         return l
 
 def grabLyrics(row):
-    print(row)
+    print(row[1])
     return lyrics(row[1],row[0])
 
 def applyGrabLyrics(df):
@@ -45,8 +48,6 @@ split_dfs = np.array_split(df, n_proc)
 pool_res = p.map(applyGrabLyrics, split_dfs)
 p.close()
 p.join()
-
-print(pool_res)
 
 lyrics = pd.concat(pool_res, axis=0)
 
