@@ -14,7 +14,7 @@ genius = lyricsgenius.Genius(client_access_token)
 if(os.path.exists("output.csv")):
     os.remove("output.csv")
 
-df = pd.read_csv("file.csv")
+df = pd.read_csv("../SpotifyAPI/ArtistAndSongs.csv")
 
 def grabLyrics(row):
     song = genius.search_song(row[1], row[0])
@@ -42,3 +42,4 @@ df["Lyrics"] = lyrics
 
 print(df)
 df.to_csv("output.csv", index=False)
+
