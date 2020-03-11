@@ -19,15 +19,17 @@ public class SpotifyAPIPlaylist extends SpotifyAPI {
 
   public SpotifyAPIPlaylist() {
     getPlaylistsTracks_Sync();
-    while (songsAdded < totalSongs) {
+    do {
       getPlaylistsTracksRequest =
           spotifyApi.getPlaylistsTracks(playlistId).limit(100).offset(songsAdded).build();
       getPlaylistsTracks_Sync();
-    }
+    } while (songsAdded < totalSongs);
   }
+
   public List<ArtistSong> getTracks() {
     return tracks;
   }
+
   private static GetPlaylistsTracksRequest getPlaylistsTracksRequest =
       spotifyApi.getPlaylistsTracks(playlistId)
           //          .fields("description")
