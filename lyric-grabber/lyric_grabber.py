@@ -14,18 +14,22 @@ genius = lyricsgenius.Genius(client_access_token)
 if(os.path.exists("output.csv")):
     os.remove("output.csv")
 
-df = pd.read_csv("../SpotifyAPI/ArtistAndSongs.csv")
+df = pd.read_csv("file.csv")
 
 def grabLyrics(row):
     song = genius.search_song(row[1], row[0])
-    return song.lyrics if song is not None else None
-
+    if song is not None:
+        lyrics = re.sub("\\n", " ", song.lyrics)
+        lyrics = re.sub("[\(\[].*?[\)\]]", "", lyrics)
+        lyrics = re.sub('"', '', lyrics)
+        return lyrics
+    else:
+        return None
 def applyGrabLyrics(df):
     lyrics = df.apply(grabLyrics,axis=1)
-    print(type(lyrics))
     return lyrics
 
-n_proc = mp.cpu_count() * 10
+n_proc = np.minimum(mp.cpu_count() * 10, df.shape[0])
 p = mp.Pool(n_proc)
 split_dfs = np.array_split(df, n_proc)
 pool_res = p.map(applyGrabLyrics, split_dfs)
