@@ -45,10 +45,16 @@ df = df.dropna()
 lyricsCount = df.Lyrics.apply(len)
 lyricsStd = lyricsCount.std()
 lyricsMean = lyricsCount.mean()
-lowerOutliers = lyricsCount < lyricsMean - 3 * lyricsStd
-upperOutliers = lyricsCount > lyricsMean + 3 * lyricsStd
-df = df[lowerOutliers == False]
-df = df[upperOutliers == False]
+print("mean:",lyricsMean,"\nstd:",lyricsStd)
+lowerOutliers = lyricsCount < lyricsMean - 2 * lyricsStd
+upperOutliers = lyricsCount > lyricsMean + 2 * lyricsStd
+outlierIndices = []
+for i in range(lowerOutliers.shape[0]):
+    if lowerOutliers.iloc[i] or upperOutliers.iloc[i]:
+        outlierIndices.append(i)
+
+df = df.drop(index=outlierIndices)
+
 print(df)
 df.to_csv("output.csv", index=False)
 
