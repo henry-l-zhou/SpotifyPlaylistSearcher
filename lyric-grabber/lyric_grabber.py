@@ -42,6 +42,7 @@ lyrics = pd.concat(pool_res, axis=0)
 df["Lyrics"] = lyrics
 df = df.dropna()
 
+#add minimum lyric count of 10characters
 lyricsOutliers = df.Lyrics.apply(len) > 4000
 print("median",df.Lyrics.apply(len).median())
 print(df[lyricsOutliers==True])
