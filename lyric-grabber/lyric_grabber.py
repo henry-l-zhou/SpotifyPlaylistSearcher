@@ -42,18 +42,10 @@ lyrics = pd.concat(pool_res, axis=0)
 df["Lyrics"] = lyrics
 df = df.dropna()
 
-lyricsCount = df.Lyrics.apply(len)
-lyricsStd = lyricsCount.std()
-lyricsMean = lyricsCount.mean()
-print("mean:",lyricsMean,"\nstd:",lyricsStd)
-lowerOutliers = lyricsCount < lyricsMean - 2 * lyricsStd
-upperOutliers = lyricsCount > lyricsMean + 2 * lyricsStd
-outlierIndices = []
-for i in range(lowerOutliers.shape[0]):
-    if lowerOutliers.iloc[i] or upperOutliers.iloc[i]:
-        outlierIndices.append(i)
-
-df = df.drop(index=outlierIndices)
+lyricsOutliers = df.Lyrics.apply(len) > 4000
+print("median",df.Lyrics.apply(len).median())
+print(df[lyricsOutliers==True])
+df = df[lyricsOutliers==False]
 
 print(df)
 df.to_csv("output.csv", index=False)
