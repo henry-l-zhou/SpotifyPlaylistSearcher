@@ -14,6 +14,7 @@ searched_list = []
 for i in range(df.shape[0]):
     count = 0;
     words = df.iloc[i]["Lyrics"]
+    print(df.iloc[i])
     words = re.findall(r"[\w']+|[.,!?;]", words)
     for word in words:
         if user_input in word:

@@ -25,6 +25,7 @@ def grabLyrics(row):
         return lyrics
     else:
         return None
+
 def applyGrabLyrics(df):
     lyrics = df.apply(grabLyrics,axis=1)
     return lyrics
@@ -39,7 +40,15 @@ p.join()
 lyrics = pd.concat(pool_res, axis=0)
 
 df["Lyrics"] = lyrics
+df = df.dropna()
 
+lyricsCount = df.Lyrics.apply(len)
+lyricsStd = lyricsCount.std()
+lyricsMean = lyricsCount.mean()
+lowerOutliers = lyricsCount < lyricsMean - 3 * lyricsStd
+upperOutliers = lyricsCount > lyricsMean + 3 * lyricsStd
+df = df[lowerOutliers == False]
+df = df[upperOutliers == False]
 print(df)
 df.to_csv("output.csv", index=False)
 
