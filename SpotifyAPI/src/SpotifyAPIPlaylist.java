@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class SpotifyAPIPlaylist extends SpotifyAPI {
+  // playlistID used
   private static final String playlistId = "6hCtSk1sPDFctoc9cvuWqO";
 
   private static List<ArtistSong> tracks = new ArrayList<ArtistSong>();
@@ -18,7 +19,6 @@ public class SpotifyAPIPlaylist extends SpotifyAPI {
       new SpotifyApi.Builder().setAccessToken(SpotifyAPI.clientCredentials_Sync()).build();
 
   public SpotifyAPIPlaylist() {
-    getPlaylistsTracks_Sync();
     do {
       getPlaylistsTracksRequest =
           spotifyApi.getPlaylistsTracks(playlistId).limit(100).offset(songsAdded).build();
@@ -32,19 +32,18 @@ public class SpotifyAPIPlaylist extends SpotifyAPI {
 
   private static GetPlaylistsTracksRequest getPlaylistsTracksRequest =
       spotifyApi.getPlaylistsTracks(playlistId)
-          //          .fields("description")
           .limit(100).offset(0)
-          //          .market(CountryCode.SE)
           .build();
 
+/**
+ * Calls the Spotify API to get tracks from a playlist. (MAX 100 songs can be called at once)
+ */
   public static void getPlaylistsTracks_Sync() {
     try {
       final Paging<PlaylistTrack> playlistTrackPaging = getPlaylistsTracksRequest.execute();
 
       totalSongs = playlistTrackPaging.getTotal();
       for (PlaylistTrack playlistTrack : playlistTrackPaging.getItems()) {
-        //        System.out.print(playlistTrack.getTrack().getName() + " ||| ");
-        //        System.out.print(playlistTrack.getTrack().getArtists()[0].getName());
         songsAdded++;
         tracks.add(new ArtistSong(playlistTrack.getTrack().getArtists()[0].getName(),
             playlistTrack.getTrack().getName()));

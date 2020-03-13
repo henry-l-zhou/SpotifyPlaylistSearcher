@@ -1,20 +1,18 @@
 import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
+/**
+ * Exports the songs in (ARTIST, SONG) format to a .csv
+ * @author zhouh
+ *
+ */
 public class ExportTracksToCSV {
   public static void main(String[] args) {
     SpotifyAPIPlaylist playlist = new SpotifyAPIPlaylist();
     ArrayList<ArtistSong> tracks = (ArrayList<ArtistSong>) playlist.getTracks();
 
-//    for (int i = 0; i < tracks.size(); i++) {
-//      System.out.println(tracks.get(i).song);
-//    }
     try {
       FileWriter csvWriter = new FileWriter("ArtistAndSongs.csv");
-      csvWriter.append("Artist, Song Name");
+      csvWriter.append("Artist, Song Name\n");
       csvWriter.append("\n");
       for (ArtistSong data : tracks) {
         csvWriter.append('"' + data.artist + '"' + ',' + '"' + data.song + '"');
@@ -23,7 +21,7 @@ public class ExportTracksToCSV {
 
       csvWriter.flush();
       csvWriter.close();
-    } catch (IOException e) {
+    } catch (Exception e) {
 
       e.printStackTrace();
     }
