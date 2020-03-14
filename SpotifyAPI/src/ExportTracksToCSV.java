@@ -12,7 +12,7 @@ public class ExportTracksToCSV {
 
     try {
       FileWriter csvWriter = new FileWriter("ArtistAndSongs.csv");
-      csvWriter.append("Artist, Song Name\n");
+      csvWriter.append("Artist, Song Name");
       csvWriter.append("\n");
       for (ArtistSong data : tracks) {
         csvWriter.append('"' + data.artist + '"' + ',' + '"' + data.song + '"');
