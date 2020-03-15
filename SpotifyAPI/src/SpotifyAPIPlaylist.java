@@ -10,7 +10,7 @@ import java.util.List;
 
 public class SpotifyAPIPlaylist extends SpotifyAPI {
   // playlistID used
-  private static final String playlistId = "6hCtSk1sPDFctoc9cvuWqO";
+  private static String playlistId = "6hCtSk1sPDFctoc9cvuWqO";
 
   private static List<ArtistSong> tracks = new ArrayList<ArtistSong>();
   private static int totalSongs;
@@ -19,13 +19,18 @@ public class SpotifyAPIPlaylist extends SpotifyAPI {
       new SpotifyApi.Builder().setAccessToken(SpotifyAPI.clientCredentials_Sync()).build();
 
   public SpotifyAPIPlaylist() {
+    this(playlistId);
+  }
+
+  public SpotifyAPIPlaylist(String playlistID) {
+    SpotifyAPIPlaylist.playlistId = playlistID;
+    
     do {
       getPlaylistsTracksRequest =
           spotifyApi.getPlaylistsTracks(playlistId).limit(100).offset(songsAdded).build();
       getPlaylistsTracks_Sync();
     } while (songsAdded < totalSongs);
   }
-
   public List<ArtistSong> getTracks() {
     return tracks;
   }

@@ -1,5 +1,6 @@
 import java.io.FileWriter;
 import java.util.ArrayList;
+
 /**
  * Exports the songs in (ARTIST, SONG) format to a .csv
  * @author zhouh
@@ -7,7 +8,12 @@ import java.util.ArrayList;
  */
 public class ExportTracksToCSV {
   public static void main(String[] args) {
-    SpotifyAPIPlaylist playlist = new SpotifyAPIPlaylist();
+
+    // if no command line argument, creates playlist based on rachel's god playlist
+    // if command line present with playlistID in it, uses that instead
+    SpotifyAPIPlaylist playlist =
+        args.length == 0 ? new SpotifyAPIPlaylist() : new SpotifyAPIPlaylist(args[0]);
+        
     ArrayList<ArtistSong> tracks = (ArrayList<ArtistSong>) playlist.getTracks();
 
     try {
