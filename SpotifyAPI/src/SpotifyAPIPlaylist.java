@@ -10,7 +10,7 @@ import java.util.List;
 
 public class SpotifyAPIPlaylist extends SpotifyAPI {
   // playlistID used
-  private static String playlistId = "6hCtSk1sPDFctoc9cvuWqO";
+  private static String playlistId = "1icxxGoB6C0jeOcbMabZLV";
 
   private static List<ArtistSong> tracks = new ArrayList<ArtistSong>();
   private static int totalSongs;
