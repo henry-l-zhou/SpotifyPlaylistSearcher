@@ -14,7 +14,7 @@ def main():
 	    for word in words:
 	        if user_input in word:
 	            count += 1
-	    searched_list.append([df.iloc[i][" Song Name"], df.iloc[i]["Artist"], count])
+	    searched_list.append([df.iloc[i]["Song Name"], df.iloc[i]["Artist"], count])
 
 	searched_list.sort(key = lambda r:r[2], reverse = True)
 

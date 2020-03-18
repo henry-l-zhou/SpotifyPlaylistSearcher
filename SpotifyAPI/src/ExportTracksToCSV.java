@@ -22,7 +22,7 @@ public class ExportTracksToCSV {
     try {
       Writer csvWriter = new OutputStreamWriter(new FileOutputStream("ArtistAndSongs.csv"),
           StandardCharsets.UTF_8);
-      csvWriter.append("Artist, Song Name");
+      csvWriter.append("Artist,Song Name");
       csvWriter.append("\n");
       for (ArtistSong data : tracks) {
         csvWriter.append('"' + data.artist + '"' + ',' + '"' + data.song + '"');
