@@ -12,7 +12,7 @@ public class SpotifyAPIPlaylist extends SpotifyAPI {
   // playlistID used
   private static String playlistId = "1icxxGoB6C0jeOcbMabZLV";
 
-  private static List<ArtistSong> tracks = new ArrayList<ArtistSong>();
+  private static List<PlaylistTrack> tracks = new ArrayList<PlaylistTrack>();
   private static int totalSongs;
   private static int songsAdded;
   private static final SpotifyApi spotifyApi =
@@ -31,7 +31,7 @@ public class SpotifyAPIPlaylist extends SpotifyAPI {
       getPlaylistsTracks_Sync();
     } while (songsAdded < totalSongs);
   }
-  public List<ArtistSong> getTracks() {
+  public List<PlaylistTrack> getTracks() {
     return tracks;
   }
 
@@ -50,8 +50,7 @@ public class SpotifyAPIPlaylist extends SpotifyAPI {
       totalSongs = playlistTrackPaging.getTotal();
       for (PlaylistTrack playlistTrack : playlistTrackPaging.getItems()) {
         songsAdded++;
-        tracks.add(new ArtistSong(playlistTrack.getTrack().getArtists()[0].getName(),
-            playlistTrack.getTrack().getName()));
+        tracks.add(playlistTrack);
       }
     } catch (IOException | SpotifyWebApiException e) {
       System.out.println("Error: " + e.getMessage());
