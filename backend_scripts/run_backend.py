@@ -1,5 +1,5 @@
 import os
-
+import time
 # list = [
 # "5yT0DxT7WONbDQQBmrtgiL",
 # "0Wou4BLxlWeNhswjKAd3bn",
@@ -14,16 +14,23 @@ import os
 # "66UMsfBXCReX9ISaWbt7rF",
 # "1elML6yfu3QSghfpBiL3Ce",
 # "5FsOnMva6vkdOfexAzN6Vx",]
+start_time = time.time()
 
 list = [line.rstrip('\n') for line in open("input.txt")]
 
 for i in range(len(list)):
 	try:
+		#runs all the backend files
+		os.system("run_backend.bat " + list[i])
+
+		#deletes the playlist id in input.txt
 		with open('input.txt', 'r') as fin:
 		    data = fin.read().splitlines(True)
 		with open('input.txt', 'w') as fout:
 		    fout.writelines(data[1:])
-		os.system("run_backend.bat " + list[i])
 	except:
-		pass
+		print (str(i) + " Playlist IDS were inserted into db.")
+		e = int(time.time() - start_time)
+		print('{:02d}:{:02d}:{:02d}'.format(e // 3600, (e % 3600 // 60), e % 60))
+		break
 #os.system("run_backend.bat 4Q8FtsVA5mvhaeMuVgqwGA")

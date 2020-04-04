@@ -29,18 +29,21 @@ if __name__ == '__main__':
     n_proc = np.minimum(4, df.shape[0])
     split_dfs = np.array_split(df, n_proc)
     p = mp.Pool(n_proc)
-    pool_res = p.map(applyGrabLyrics, split_dfs)
-    p.close()
-    p.join()
+    try:
+        pool_res = p.map(applyGrabLyrics, split_dfs)
+        p.close()
+        p.join()
 
-    lyrics = pd.concat(pool_res, axis=0)
-    # applyGrabLyrics(df)
-    df["Lyrics"] = lyrics
-    df = df.dropna()
+        lyrics = pd.concat(pool_res, axis=0)
+        # applyGrabLyrics(df)
+        df["Lyrics"] = lyrics
+        df = df.dropna()
 
-    #add minimum lyric count of 10characters
-    lyricsOutliers = df.Lyrics.apply(len) > 4000
-    df = df[lyricsOutliers==False]
+        #add minimum lyric count of 10characters
+        lyricsOutliers = df.Lyrics.apply(len) > 4000
+        df = df[lyricsOutliers==False]
 
-    print(df)
-    df.to_csv("output.csv", index=False)
+        print(df)
+        df.to_csv("output.csv", index=False)
+    except:
+        p.terminate()
